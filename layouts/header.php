@@ -6,7 +6,7 @@
     }
 
     if (!isset($_SESSION["username"]))
-        header('location:/inv/login.php');
+        header('location:/inventoy/login.php');
  
    
 ?>
