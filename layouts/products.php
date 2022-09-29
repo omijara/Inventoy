@@ -39,7 +39,7 @@ $obj = new Model;
       </div>
       <div class="modal-body">
       <form class="form-row" id="register_form" action="form_insert.php" method="post">
-  <input type="text" name="id" value="">
+  <input type="text" id="product_id" name="id" value="">
   
   <div class="form-group col-md-6">
   <label for="name">প্রোডাক্ট এর পরিমাণ<span class="text-danger">*</span></label>
@@ -116,7 +116,7 @@ $obj = new Model;
               
                     <div class="dropdown-divider"></div>
 
-               <button type="button" class="dropdown-item" data-toggle="modal"data-target="#exampleModalCenter" data_id="<?php echo $rows['product_id']?>"><span class="fa fa-plus text-primary" ></span> Add Stock</button>
+               <button onclick="add_stock(<?php echo $rows['product_id']?>)" type="button" class="dropdown-item" data-toggle="modal"data-target="#exampleModalCenter"><span class="fa fa-plus text-primary" ></span> Add Stock</button>
 
                 <!-- <a class="dropdown-item" href="?page=history/manage_record&id="><span class="fa fa-plus text-primary"></span> Add Stock</a> -->
                     <div class="dropdown-divider"></div>
@@ -156,6 +156,9 @@ $obj = new Model;
 
 <script>
 
+function add_stock(el){
+  $('#product_id').val(el);
+}
 
 </script>
 
