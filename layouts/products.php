@@ -93,6 +93,7 @@ $obj = new Model;
                     <th>#</th>
                     <th>প্রোডাক্ট এর নাম</th>
                     <th>স্টক পরিমাণ</th>
+                    <th>Price</th>
                     <th>প্রক্রিয়া</th>
                   </tr>
                   </thead>
@@ -108,6 +109,7 @@ $obj = new Model;
                    <td><?php echo $rows['product_name']?></td>
 
                    <td><?php echo $rows['quantity']?> ফুট</td>
+                   <td><?php echo $rows['price']?> taka</td>
 
                      <td align="center">
                     <button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">Action<span class="sr-only">Toggle Dropdown</span>
