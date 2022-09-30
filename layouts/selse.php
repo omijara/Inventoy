@@ -245,6 +245,13 @@ $products = $obj->show_product_selse();
 
     function delete_product(el) {
         $(el).closest('.card').remove();
+        var new_pay = 0;
+        $("input[name='product_price[]']")
+            .map(function() {
+                var single = $(this).val();
+                new_pay = new_pay + parseInt(single);
+            });
+        $('.price_payable_total').val(new_pay);
     }
     $('.name2').select2({
         placeholder: "Select Approver",

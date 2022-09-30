@@ -77,7 +77,7 @@ class Model
 	{
 
 		var_dump($_POST);
-		$
+		
 		
 	}
 	public function category_input($insertID)
