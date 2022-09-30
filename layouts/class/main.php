@@ -76,9 +76,41 @@ class Model
 	public function selse_insert($insertID)
 	{
 
-		var_dump($_POST);
-		
-		
+		$c_id = $_POST['customer_id'];
+		$paid = $_POST['total_paid'];
+		$selse_id = rand(10000, 99999);
+		$pay_able = $_POST['total_payable'];
+		$query =  "INSERT INTO `salse` (`customer_id`, `selse_id`, `total`, `paid`) VALUES('$c_id', '$selse_id', '$pay_able', '$paid')";
+		$sql = mysqli_query($this->link, $query);
+		if ($sql == true) {
+			$due_query = "SELECT * FROM `customer_details` WHERE id='$c_id'";
+			$due_result = mysqli_query($this->link, $due_query);
+			$due_result = mysqli_fetch_array($due_result);
+			$total_dues = $due_result['dues'] + $pay_able;
+			$net_due = $total_dues - $paid;
+			$update_qery = "UPDATE `customer_details` SET dues='$net_due' WHERE id='$c_id'";
+			$update_sql = mysqli_query($this->link, $update_qery);
+
+			$product_id = $_POST['product_id'];
+			$quantity = $_POST['quantity'];
+			$product_price = $_POST['product_price'];
+
+
+			foreach ($product_id as $key => $value) {
+				$p_id = $product_id[$key];
+				$qty = $quantity[$key];
+				$pp = $product_price[$key];
+				$single_query = "INSERT INTO `selse_item` (`selse_id`, `product_id`, `quantity`, `price`) VALUES('$selse_id', '$p_id', '$qty', '$pp')";
+				mysqli_query($this->link, $single_query);
+			}
+
+			if ($update_sql) {
+				header("location: print.php?selse_id=$selse_id");
+				exit();
+			}
+		} else {
+			echo "Failed to insert";
+		}
 	}
 	public function category_input($insertID)
 	{
@@ -318,6 +350,8 @@ class Model
 			echo "Unable to update record";
 		}
 	}
+
+
 }
 
 function en_to_bn($input)

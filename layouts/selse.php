@@ -8,6 +8,8 @@ $product_cat = $obj->show_category();
 $customers = $obj->show_customer_data();
 $products = $obj->show_product_selse();
 
+ 
+
 ?>
 <div class="content-wrapper">
     <section class="content">
@@ -25,9 +27,10 @@ $products = $obj->show_product_selse();
                             <select class="name2 form-control" id="driver" name="c_name" onchange="customer_due(this)" required>
                                 <option>Select</option>
                                 <?php while ($customer = mysqli_fetch_assoc($customers)) : ?>
-                                    <option value="<?php echo $customer['dues'] ?>"><?php echo $customer['mobile'] ?></option>
+                                    <option value="<?php echo $customer['dues'] ?>+<?php echo $customer['id'] ?>"><?php echo $customer['mobile'] ?></option>
                                 <?php endwhile; ?>
                             </select>
+                            <input type="hidden" name="customer_id" class="customer_id_input">
                             <button type="button" class="btn btn-info mt-2 btn-sm" data-toggle="modal" data-target="#exampleModalCenter">New Customer</button>
                         </div>
 
@@ -51,7 +54,7 @@ $products = $obj->show_product_selse();
                                                     <option value="<?php echo $product['quantity'] ?>+<?php echo $product['price'] ?>+<?php echo $product['product_id'] ?>"><?php echo $product['product_name'] ?></option>
                                                 <?php endwhile; ?>
                                             </select>
-                                            <input type="hidden" class="product_id" name="product_id">
+                                            <input type="hidden" class="product_id" name="product_id[]">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="name">Stock<span class="text-danger">*</span></label>
@@ -69,7 +72,7 @@ $products = $obj->show_product_selse();
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="name">Product Price<span class="text-danger">*</span></label>
-                                            <input type="text" disabled class="form-control price_sub_total" name="product_price[]" required>
+                                            <input type="text" class="form-control price_sub_total" name="product_price[]" required>
                                         </div>
                                     </div>
                                 </div>
@@ -78,7 +81,7 @@ $products = $obj->show_product_selse();
                         </div>
                         <div class="col-md-6">
                             <label for="name">Total Price<span class="text-danger">*</span></label>
-                            <input type="text" disabled class="form-control price_payable_total" name="total_payable" value="0" required>
+                            <input type="text" class="form-control price_payable_total disable" name="total_payable" value="0" required>
                         </div>
                         <div class="col-md-6">
                             <label for="name">Paid<span class="text-danger">*</span></label>
@@ -163,7 +166,11 @@ $products = $obj->show_product_selse();
     $('.main_row').hide();
 
     function customer_due(el) {
-        $('#due_input').val($(el).val());
+        var c_id_due = $(el).val();
+        var split_ = c_id_due.split('+');
+
+        $('#due_input').val(split_[0]);
+        $('.customer_id_input').val(split_[1]);
         $('.main_row').show();
         $('.add_more').show();
     }
@@ -227,7 +234,7 @@ $products = $obj->show_product_selse();
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="name">Product Price<span class="text-danger">*</span></label>
-                                            <input type="text" disabled class="form-control price_sub_total" name="product_price[]" required>
+                                            <input type="text" class="form-control price_sub_total" name="product_price[]" required>
                                         </div>
                                     </div>
                                 </div>
