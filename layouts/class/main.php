@@ -76,6 +76,7 @@ class Model
 	public function selse_insert($insertID)
 	{
 
+
 		$c_id = $_POST['customer_id'];
 		$paid = $_POST['total_paid'];
 		$selse_id = rand(10000, 99999);
@@ -96,10 +97,18 @@ class Model
 			$product_price = $_POST['product_price'];
 
 
+
 			foreach ($product_id as $key => $value) {
 				$p_id = $product_id[$key];
 				$qty = $quantity[$key];
 				$pp = $product_price[$key];
+
+				$stock = number_format($_POST['stock'][$key]) - number_format($qty);
+
+				$update_stock = "UPDATE `product_list` SET quantity=$stock WHERE product_id=$p_id";
+
+				mysqli_query($this->link, $update_stock);
+
 				$single_query = "INSERT INTO `selse_item` (`selse_id`, `product_id`, `quantity`, `price`) VALUES('$selse_id', '$p_id', '$qty', '$pp')";
 				mysqli_query($this->link, $single_query);
 			}
@@ -350,8 +359,6 @@ class Model
 			echo "Unable to update record";
 		}
 	}
-
-
 }
 
 function en_to_bn($input)

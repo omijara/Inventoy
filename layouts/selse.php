@@ -8,99 +8,100 @@ $product_cat = $obj->show_category();
 $customers = $obj->show_customer_data();
 $products = $obj->show_product_selse();
 
- 
+
 
 ?>
 <div class="content-wrapper">
     <section class="content">
         <div class="container-fluid">
-            <div class="col-md-12">
-                <h5 class="card-header">প্রোডাক্ট যুক্ত করুন</h5>
-                <!-- <p style="float:right;"><a href="view.php">Back to list</a></p> -->
-                <div class="card-body">
 
-                    <form class="form-row" id="register_form" action="form_insert.php" method="post">
-                        <input type="hidden" name="id" value="">
+            <h5 class="card-header">প্রোডাক্ট যুক্ত করুন</h5>
+            <!-- <p style="float:right;"><a href="view.php">Back to list</a></p> -->
+            <div class="card-body">
 
-                        <div class="form-group col-md-6">
-                            <label for="name">Customer<span class="text-danger">*</span></label>
-                            <select class="name2 form-control" id="driver" name="c_name" onchange="customer_due(this)" required>
-                                <option>Select</option>
-                                <?php while ($customer = mysqli_fetch_assoc($customers)) : ?>
-                                    <option value="<?php echo $customer['dues'] ?>+<?php echo $customer['id'] ?>"><?php echo $customer['mobile'] ?></option>
-                                <?php endwhile; ?>
-                            </select>
-                            <input type="hidden" name="customer_id" class="customer_id_input">
-                            <button type="button" class="btn btn-info mt-2 btn-sm" data-toggle="modal" data-target="#exampleModalCenter">New Customer</button>
-                        </div>
+                <form class="form-row" id="register_form" action="form_insert.php" method="post">
+                    <input type="hidden" name="id" value="">
+
+                    <div class="form-group col-md-6">
+                        <label for="name">Customer<span class="text-danger">*</span></label>
+                        <select class="name2 form-control" id="driver" name="c_name" onchange="customer_due(this)" required>
+                            <option>Select</option>
+                            <?php while ($customer = mysqli_fetch_assoc($customers)) : ?>
+                                <option value="<?php echo $customer['dues'] ?>+<?php echo $customer['id'] ?>"><?php echo $customer['mobile'] ?></option>
+                            <?php endwhile; ?>
+                        </select>
+                        <input type="hidden" name="customer_id" class="customer_id_input">
+                        <button type="button" class="btn btn-info mt-2 btn-sm" data-toggle="modal" data-target="#exampleModalCenter">New Customer</button>
+                    </div>
 
 
 
-                        <div class="form-group col-md-6">
-                            <label for="name">Due<span class="text-danger">*</span></label>
-                            <input type="text" disabled class="form-control" id="due_input" name="due" required>
-                        </div>
-                        <div class="main_row">
+                    <div class="form-group col-md-6">
+                        <label for="name">Due<span class="text-danger">*</span></label>
+                        <input type="text" disabled class="form-control" id="due_input" name="due" required>
+                    </div>
+                    <div class="main_row">
 
+                        <div class="col-md-12">
                             <div class="card p-4">
-                                <div class="col-md-12">
-                                    <div class="row item_single">
-                                        <div class="form-group col-md-6">
-                                            <label for="name">Product<span class="text-danger">*</span></label>
-                                            <br>
-                                            <select class="name form-control" id="driver" name="c_name" onchange="product_info(this)" required>
-                                                <option>Select</option>
-                                                <?php while ($product = mysqli_fetch_assoc($products)) : ?>
-                                                    <option value="<?php echo $product['quantity'] ?>+<?php echo $product['price'] ?>+<?php echo $product['product_id'] ?>"><?php echo $product['product_name'] ?></option>
-                                                <?php endwhile; ?>
-                                            </select>
-                                            <input type="hidden" class="product_id" name="product_id[]">
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label for="name">Stock<span class="text-danger">*</span></label>
-                                            <input type="text" disabled class="form-control quantity_input" required>
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label for="name">Price<span class="text-danger">*</span></label>
-                                            <input type="text" disabled class="form-control price_input" required>
-                                        </div>
+                                <div class="row item_single">
+                                    <div class="form-group col-md-6">
+                                        <label for="name">Product<span class="text-danger">*</span></label>
+                                        <br>
+                                        <select class="name form-control" id="driver" name="c_name" onchange="product_info(this)" required>
+                                            <option>Select</option>
+                                            <?php while ($product = mysqli_fetch_assoc($products)) : ?>
+                                                <option value="<?php echo $product['quantity'] ?>+<?php echo $product['price'] ?>+<?php echo $product['product_id'] ?>"><?php echo $product['product_name'] ?></option>
+                                            <?php endwhile; ?>
+                                        </select>
+                                        <input type="hidden" class="product_id" name="product_id[]">
                                     </div>
-                                    <div class="quantity_price row" style="display:none;">
-                                        <div class="form-group col-md-6">
-                                            <label for="name">Quantity(ফুট)<span class="text-danger">*</span></label>
-                                            <input onkeyup="calculate_price(this)" type="number" value="" class="form-control" name="quantity[]" required>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="name">Product Price<span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control price_sub_total" name="product_price[]" required>
-                                        </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="name">Stock<span class="text-danger">*</span></label>
+                                        <input type="number" name="stock[]" class="form-control quantity_input" readonly>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="name">Price<span class="text-danger">*</span></label>
+                                        <input type="text" disabled class="form-control price_input" required>
                                     </div>
                                 </div>
-
+                                <div class="quantity_price row" style="display:none;">
+                                    <div class="form-group col-md-6">
+                                        <label for="name">Quantity(ফুট)<span class="text-danger">*</span></label>
+                                        <input onkeyup="calculate_price(this)" type="number" value="" class="form-control" name="quantity[]" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="name">Product Price<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control price_sub_total" name="product_price[]" required>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
-                        <div class="col-md-6">
-                            <label for="name">Total Price<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control price_payable_total disable" name="total_payable" value="0" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="name">Paid<span class="text-danger">*</span></label>
-                            <input type="number" class="form-control price_paid_total" name="total_paid" value="0" required>
-                        </div>
-                        <div class="col-md-12 mt-4">
-                            <button class="btn btn-primary add_more" style="display:none;" onclick="add_more_product()">Add More</button>
-                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="name">Total Price<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control price_payable_total disable" name="total_payable" value="0" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="name">Paid<span class="text-danger">*</span></label>
+                        <input type="number" class="form-control price_paid_total" name="total_paid" value="0" required>
+                    </div>
+                    <div class="col-md-12 mt-4">
+                        <button class="btn btn-primary add_more" style="display:none;" onclick="add_more_product()">Add More</button>
+                    </div>
 
 
-                        <div class="col-12">
-                            <div class="float-right">
-                                <button type="submit" name="save_selse_product" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Save</button>
-                                <a href="javascript: history.go(-1)" type="submit" name="data" class="btn btn-sm btn-secondary"></i> Cancel</a>
-                            </div>
+                    <div class="col-12">
+                        <div class="float-right">
+                            <button type="submit" name="save_selse_product" class="btn btn-sm btn-primary"><i class="fas fa-download"></i> Save</button>
+                            <a href="javascript: history.go(-1)" type="submit" name="data" class="btn btn-sm btn-secondary"></i> Cancel</a>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
+
         </div>
     </section>
 </div>
