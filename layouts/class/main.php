@@ -87,7 +87,7 @@ class Model
 			$due_query = "SELECT * FROM `customer_details` WHERE id='$c_id'";
 			$due_result = mysqli_query($this->link, $due_query);
 			$due_result = mysqli_fetch_array($due_result);
-			$total_dues = $due_result['dues'] + $pay_able;
+			$total_dues = (int)$due_result['dues'] + (int) $pay_able;
 			$net_due = $total_dues - $paid;
 			$update_qery = "UPDATE `customer_details` SET dues='$net_due' WHERE id='$c_id'";
 			$update_sql = mysqli_query($this->link, $update_qery);
@@ -103,8 +103,8 @@ class Model
 				$qty = $quantity[$key];
 				$pp = $product_price[$key];
 
-				$stock = number_format($_POST['stock'][$key]) - number_format($qty);
-
+				$stock = (int) $_POST['stock'][$key] - (int)$qty;
+			
 				$update_stock = "UPDATE `product_list` SET quantity=$stock WHERE product_id=$p_id";
 
 				mysqli_query($this->link, $update_stock);
